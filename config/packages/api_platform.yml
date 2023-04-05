@@ -1,0 +1,4 @@
+## YAML Template.
+api_platform:
+    defaults:
+        pagination_items_per_page: 30 # Default value
