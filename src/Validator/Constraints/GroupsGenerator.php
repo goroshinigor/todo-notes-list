@@ -34,5 +34,7 @@ final class GroupsGenerator implements ValidationGroupsGeneratorInterface
             case $this->conditionTwo->get($board):
                 return ['august'];
         }
+        
+        return [];
     }
 }
