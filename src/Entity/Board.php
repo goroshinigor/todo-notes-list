@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints;
@@ -24,7 +28,13 @@ use App\Validator\Constraints\GroupsGenerator;
         'groups' => ['board:write'],
     ],
     order: ['dateCreated' => 'DESC'],
-    validationContext: ['groups' => GroupsGenerator::class]
+    validationContext: ['groups' => GroupsGenerator::class],
+    operations:[
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Delete(),
+    ]
 )]
 #[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board
