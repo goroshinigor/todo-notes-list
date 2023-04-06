@@ -10,6 +10,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints;
+use App\Validator\Constraints\GroupsGenerator;
 
 #[ApiResource(
     paginationEnabled: true,
@@ -21,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'groups' => ['board:write'],
     ],
     order: ['dateCreated' => 'DESC'],
+    validationContext: ['groups' => GroupsGenerator::class]
 )]
 #[ORM\Entity(repositoryClass: BoardRepository::class)]
 class Board
@@ -31,6 +35,9 @@ class Board
     private ?int $id = null;
 
     #[Groups(['board:read', 'board:write'])]
+    #[Assert\NotBlank]
+    #[Constraints\FirstNameLetterNotA(groups: ['nameNotA'])]
+    #[Constraints\FirstNameLetterAIfAugust(groups: ['august'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -114,9 +121,4 @@ class Board
         }
         return $this;
     }
-    
-    
-    
-    
-    
 }
